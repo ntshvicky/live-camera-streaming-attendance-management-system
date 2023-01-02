@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <div class="container" style="height: 650px; width: 650px;">
+            <div class="row">
+                <div class="col-lg-8  offset-lg-2">
+                    <h3 class="mt-5">Live Streaming</h3>
+                    <img src="{{ url_for('video_feed') }}" width="100%">
+                </div>
+            </div>
+            <p id="clock">Speak text start here</p>
+        </div>
+
+        
+
+
+        <script>
+            var clock = document.getElementById("clock");
+        
+            setInterval(() => {
+                fetch("{{ url_for('audio_feed') }}")
+                .then(response => {
+                        response.text().then((t)=> {
+                            if(t != "")
+                                clock.innerHTML =  t
+                        })
+                    });
+                }, 100);  
+        </script>
+
+        </body>
+</html>
